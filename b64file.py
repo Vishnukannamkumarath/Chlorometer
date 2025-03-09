@@ -113,7 +113,7 @@ if uploaded_file is not None:
             ax.scatter([closest_concentration], [predicted_ph], color="red", s=100, label="Predicted Point")
             ax.set_xlabel("Concentration", fontsize=12)
             ax.set_ylabel("Predicted pH", fontsize=12)
-            ax.set_title("Predicted pH vs. Concentration", fontsize=14)
+            ax.set_title("Predicted Concentration vs pH", fontsize=14)
             ax.set_xticks(concentration_values[::2])  
             ax.tick_params(axis="x", rotation=45)
             ax.set_yticks(ph_values)  
