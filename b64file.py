@@ -7,6 +7,7 @@ import gdown
 import os
 import requests
 from PIL import Image
+import matplotlib.pyplot as plt
 import io
 import altair as alt
 import pandas as pd
@@ -93,26 +94,34 @@ if uploaded_file is not None:
             predicted_concentration = predict_image(model, img_array)
             st.success(f'Predicted concentration: {predicted_concentration:.4f}')
 
-            # Display comments based on concentration range
+            
             if predicted_concentration <= 0.2:
                 st.error("Low level of Chlorine.Not Good for Drinking!")
             elif 0.2 < predicted_concentration <=0.5:
                 st.info("It is Safe for use")
             else:
                 st.error("High Level of Chlorine Not Good for Use!")
-            st.subheader("Bar Chart")
-            data=pd.DataFrame({
-                 "Concentration":["Predicted"],
-                  "Value":[predicted_concentration]
-                })
-            chart=alt.Chart(data).mark_bar(size=150).encode(
-            x=alt.X("Concentration:N",title=""),
-            y=alt.Y("Value:Q",title="concentration(mg/L)",scale=alt.Scale(domain=[0,4])),
-            color=alt.value("steelblue")
-            ).properties(
-              width=300,
-              height=400
-            )
-            st.altair_chart(chart,use_container_width=False)
+            
+            st.title("pH Prediction")
+            st.subheader("pH vs. Concentration Chart")
+            concentration_values = np.round(np.linspace(0.1, 2.5, 25), 2).tolist()
+            ph_values = [5.85,5.55,5.37,5.25,5.15,5.07,5.00,4.95,4.90,4.85,4.81,4.77,4.74,4.70,4.67,4.65,4.62,4.59,4.57,4.55,4.53,4.51,4.49,4.47,4.45]  
+            closest_concentration = min(concentration_values, key=lambda x: abs(x - predicted_concentration))
+            predicted_ph = ph_values[concentration_values.index(closest_concentration)]
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.plot(concentration_values, ph_values, marker="o", linestyle="-", color="gray", alpha=0.5, label="Full Data")
+            ax.scatter([closest_concentration], [predicted_ph], color="red", s=100, label="Predicted Point")
+            ax.set_xlabel("Concentration", fontsize=12)
+            ax.set_ylabel("Predicted pH", fontsize=12)
+            ax.set_title("Predicted pH vs. Concentration", fontsize=14)
+            ax.set_xticks(concentration_values[::2])  
+            ax.tick_params(axis="x", rotation=45)
+            ax.set_yticks(ph_values)  
+            ax.legend()
+            st.pyplot(fig)
+            st.write(f"### 🔹 Predicted Concentration : **{predicted_concentration:.3f}**")
+            st.write(f"### 🔹 Mapped to Nearest: **{closest_concentration}**")
+            st.write(f"### 🔹 Corresponding pH Value: **{predicted_ph}**")
+
     except Exception as e:
         st.error(f"Error processing the image: {e}")
