@@ -92,7 +92,7 @@ if uploaded_file is not None:
         # Run prediction
         if st.button("Predict Concentration"):
             predicted_concentration = predict_image(model, img_array)
-            st.success(f'Predicted concentration: {predicted_concentration:.4f}')
+            st.success(f'Predicted concentration: {predicted_concentration:.1f}')
 
             
             if predicted_concentration <= 0.2:
