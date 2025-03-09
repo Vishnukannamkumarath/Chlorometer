@@ -92,7 +92,7 @@ if uploaded_file is not None:
         # Run prediction
         if st.button("Predict Concentration"):
             predicted_concentration = predict_image(model, img_array)
-            st.success(f'Predicted concentration: {predicted_concentration:.1f}')
+            st.success(f'### Predicted concentration: {predicted_concentration:.3f}')
 
             
             if predicted_concentration <= 0.2:
@@ -119,8 +119,8 @@ if uploaded_file is not None:
             ax.set_yticks(ph_values)  
             ax.legend()
             st.pyplot(fig)
-            st.write(f"### 🔹 Predicted Concentration : **{predicted_concentration:.3f}**")
-            st.write(f"### 🔹 Mapped to Nearest: **{closest_concentration}**")
+            #st.write(f"### 🔹 Predicted Concentration : **{predicted_concentration:.3f}**")
+            #st.write(f"### 🔹 Mapped to Nearest: **{closest_concentration}**")
             st.write(f"### 🔹 Corresponding pH Value: **{predicted_ph}**")
 
     except Exception as e:
