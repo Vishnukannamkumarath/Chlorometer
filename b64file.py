@@ -96,11 +96,11 @@ if uploaded_file is not None:
 
             
             if predicted_concentration <= 0.2:
-                st.error("Low level of Chlorine.Not Good for Drinking!")
+                st.error(f"### Low level of Chlorine.Not Good for Drinking!")
             elif 0.2 < predicted_concentration <=0.5:
-                st.info("It is Safe for use")
+                st.info(f"### It is Safe for use")
             else:
-                st.error("High Level of Chlorine Not Good for Use!")
+                st.error(f"### High Level of Chlorine Not Good for Use!")
             
             st.title("pH Prediction")
             st.subheader("pH vs. Concentration Chart")
