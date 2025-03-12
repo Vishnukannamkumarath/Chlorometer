@@ -116,7 +116,7 @@ if uploaded_file is not None:
             ax.set_title("Predicted Concentration vs pH", fontsize=14)
             ax.set_xticks(concentration_values[::2])  
             ax.tick_params(axis="x", rotation=45)
-            ax.set_yticks(ph_values)  
+            ax.set_yticks(ph_values[::2])  
             ax.legend()
             st.pyplot(fig)
             #st.write(f"### 🔹 Predicted Concentration : **{predicted_concentration:.3f}**")
